@@ -12,13 +12,10 @@ const ButtonCounter = ({ handle, text }) =>
   createElement('button', { onClick: handle }, text);
 
 export class Counter extends Component {
-  constructor() {
-    super();
-    this.state = {
-      counter: 0,
-      title: 'My Counter',
-    };
-  }
+  state = {
+    counter: 0,
+    title: 'My Counter',
+  };
 
   increment = () => {
     this.setState((prevState) => ({
@@ -37,6 +34,7 @@ export class Counter extends Component {
       counter: 0,
     });
   };
+
   render() {
     const { counter, title } = this.state;
     return (
