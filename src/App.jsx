@@ -6,9 +6,7 @@ import './assets/styles/main.scss';
 
 const App = () => (
   <main>
-    <Layout>
-      <Counter />
-    </Layout>
+    <Layout></Layout>
   </main>
 );
 
