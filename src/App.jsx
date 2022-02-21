@@ -1,13 +1,9 @@
 import React from 'react';
 
-import { Counter, Layout } from './components';
+import { Home } from './views';
 
 import './assets/styles/main.scss';
 
-const App = () => (
-  <main>
-    <Layout></Layout>
-  </main>
-);
+const App = () => <Home />;
 
 export default App;
