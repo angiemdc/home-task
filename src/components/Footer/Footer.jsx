@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logo } from '../Logo/Logo';
 
 import './Footer.modules.scss';
 
@@ -8,8 +9,8 @@ import './Footer.modules.scss';
  * @returns
  */
 
-export const Footer = ({ info }) => (
+export const Footer = () => (
   <footer className='footer'>
-    <p>{info}</p>
+    <Logo />
   </footer>
 );

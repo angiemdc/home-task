@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ReactComponent as LogoCompany } from '../../assets/images/netflixroulette.svg';
+import LogoCompany from '../../assets/images/netflixroulette.svg';
 
-import styles from './Logo.modules.scss';
+import './Logo.modules.scss';
 
 /**
  * Renders the main Logo of the APP
@@ -13,7 +13,7 @@ import styles from './Logo.modules.scss';
 
 export const Logo = () => {
   return (
-    <div className={styles.logoImg}>
+    <div className='logoImg'>
       <img src={LogoCompany} alt='logo' />
     </div>
   );

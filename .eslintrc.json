@@ -19,6 +19,9 @@
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/state-in-constructor": "off",
+    "arrow-body-style": "off",
+    "react/destructuring-assignment": "off",
     "react/function-component-definition": [
       2,
       {

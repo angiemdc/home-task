@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Layout, Footer } from '../../Components';
-
+// import { Footer, ErrorBoundary, Header, Search } from '../../Components';
+import { Footer, Header, Search, ErrorBoundary } from '../../Components';
 // import styles from './Home.modules.scss';
 
 /**
@@ -10,8 +10,12 @@ import { Layout, Footer } from '../../Components';
  */
 
 export const Home = () => (
-  <>
-    <Layout>Holi</Layout>
-    <Footer info='netflixroulette' />
-  </>
+  <div>
+    <Header>
+      <ErrorBoundary>
+        <Search details={[]} />
+      </ErrorBoundary>
+    </Header>
+    <Footer />
+  </div>
 );
