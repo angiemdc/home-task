@@ -1,0 +1,11 @@
+@import '../../assets/styles/main.scss';
+
+.logoImg {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+  img {
+    max-width: 100%;
+  }
+}

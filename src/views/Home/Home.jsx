@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Layout, Footer } from '../../components';
+import { Layout, Footer } from '../../Components';
 
 // import styles from './Home.modules.scss';
 
