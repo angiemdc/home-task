@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './Layout.modules.scss';
+import './Layout.modules.scss';
 
 /**
  * Renders the main layout of the APP
@@ -9,5 +9,5 @@ import styles from './Layout.modules.scss';
  */
 
 export const Layout = ({ children }) => (
-  <main className={styles.main}>{children}</main>
+  <main className='main'>{children}</main>
 );
