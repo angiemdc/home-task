@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Logo } from '../Logo/Logo';
 
 import './Header.modules.scss';
@@ -14,3 +15,7 @@ export const Header = ({ children }) => (
     <div>{children}</div>
   </header>
 );
+
+Header.propTypes = {
+  children: PropTypes.element.isRequired
+};
