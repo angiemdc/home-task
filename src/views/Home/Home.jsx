@@ -6,7 +6,8 @@ import {
   Header,
   Search,
   ErrorBoundary,
-  Layout
+  Layout,
+  TabsMovies
 } from '../../Components';
 // import styles from './Home.modules.scss';
 
@@ -22,7 +23,9 @@ export const Home = () => (
         <Search details={[]} />
       </ErrorBoundary>
     </Header>
-    <Layout>layout </Layout>
+    <Layout>
+      <TabsMovies />
+    </Layout>
     <Footer />
   </div>
 );
