@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import './Search.modules.scss';
 
-export const Search = () => {
+export const Search = ({ details }) => {
+  const [searchMovie, setSearchMovie] = useState('');
+
+  const filteredMovie = details?.length
+    ? details.filter((movie) => {
+        return movie.name === searchMovie;
+      })
+    : [];
+  console.log(filteredMovie);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e.target[1].value);
+    setSearchMovie(e.target[1].value);
   };
 
   return (
@@ -25,4 +35,15 @@ export const Search = () => {
       </form>
     </section>
   );
+};
+
+Search.propTypes = {
+  details: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      movieType: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired
+    }).isRequired
+  ).isRequired
 };
