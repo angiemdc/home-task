@@ -1,0 +1,12 @@
+%btn {
+  text-transform: capitalize;
+  text-align: center;
+  border: none;
+  margin: em(8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: em(4);
+  padding: em(13) em(20);
+  min-width: max-content;
+}

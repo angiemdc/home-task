@@ -1,0 +1,33 @@
+@import './assets/styles/main.scss';
+.header {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  height: $header-height;
+  background-image: url('../../assets/images/Bitmap.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  padding: em(20);
+  margin-bottom: em(20);
+  .navSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    &:first-child {
+      align-self: flex-start;
+    }
+    .btn {
+      @extend %btn;
+      padding: em(13) em(40);
+      background-color: rgba(96, 96, 96, 0.68);
+      color: $red;
+    }
+  }
+
+  div:nth-of-type(2) {
+    padding: em(20) em(24);
+  }
+}

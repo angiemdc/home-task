@@ -1,0 +1,17 @@
+.ant-tabs {
+  min-width: 100%;
+}
+
+.ant-tabs-tab-btn {
+  color: $white;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: $white;
+}
+
+.ant-tabs-ink-bar {
+  background: $red;
+}
