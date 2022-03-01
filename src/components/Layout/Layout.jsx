@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Layout.modules.scss';
 
@@ -11,3 +12,7 @@ import './Layout.modules.scss';
 export const Layout = ({ children }) => (
   <main className='main'>{children}</main>
 );
+
+Layout.propTypes = {
+  children: PropTypes.element.isRequired
+};

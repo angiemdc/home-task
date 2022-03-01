@@ -8,7 +8,7 @@ import {
   ErrorBoundary,
   Layout,
   TabsMovies
-} from '../../Components';
+} from '../../components';
 // import styles from './Home.modules.scss';
 
 /**
