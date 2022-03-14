@@ -15,3 +15,18 @@
 .ant-tabs-ink-bar {
   background: $red;
 }
+
+.ant-card-body {
+  padding: 0;
+  background-color: #555555;
+  color: #fff;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  &::after,
+  &::before {
+    border: none;
+  }
+}

@@ -1,6 +1,12 @@
 import React from 'react';
 import { Tabs } from 'antd';
 
+import { MovieCards } from '../MovieCards/MovieCards';
+import { ErrorBoundary } from '..';
+
+// TODO: defend how to mock  a sync data
+import { movieData } from '../../mock_data';
+
 import 'antd/dist/antd.css';
 import './TabsMovies.modules.scss';
 
@@ -18,7 +24,9 @@ export const TabsMovies = () => {
       {tabsContent.map(({ name, tabId }) => {
         return (
           <TabPane tab={name} key={tabId}>
-            Content of Tab {name}
+            <ErrorBoundary>
+              <MovieCards movieData={movieData} />
+            </ErrorBoundary>
           </TabPane>
         );
       })}

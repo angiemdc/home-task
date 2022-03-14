@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 
 import {
   Footer,
   Header,
   Search,
   ErrorBoundary,
-  Layout,
-  TabsMovies
+  Layout
 } from '../../components';
+
+const TabsMovies = lazy(() =>
+  import('../../components').then((module) => ({
+    default: module.TabsMovies
+  }))
+);
 
 /**
  * Renders the main Home of the APP
@@ -22,7 +27,9 @@ export const Home = () => (
       </ErrorBoundary>
     </Header>
     <Layout>
-      <TabsMovies />
+      <Suspense fallback={<div>Loading...</div>}>
+        <TabsMovies />
+      </Suspense>
     </Layout>
     <Footer />
   </div>
