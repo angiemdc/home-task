@@ -19,7 +19,7 @@ export const MovieCards = ({ movieData }) => {
       {movieData &&
         movieData.map(({ id, ...others }) => (
           <Col key={id} span={8}>
-            <MovieCard {...others} />
+            <MovieCard {...others} key={id} />
           </Col>
         ))}
     </Row>

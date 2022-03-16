@@ -1,9 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
-
 import { MovieCards } from '../MovieCards/MovieCards';
-import { ErrorBoundary } from '..';
-
+import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 // TODO: defend how to mock  a sync data
 import { movieData } from '../../mock_data';
 

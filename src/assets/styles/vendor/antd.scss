@@ -30,3 +30,50 @@
     border: none;
   }
 }
+
+.ant-modal-body,
+.ant-modal,
+.ant-card {
+  background-color: #232323;
+  text-align: center;
+  .ant-card-head-title {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 49px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .ant-card-body {
+    background-color: #232323;
+    label {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: 0.888889px;
+      text-transform: uppercase;
+      color: #f65261;
+      mix-blend-mode: normal;
+      opacity: 0.8;
+    }
+    .ant-input,
+    .ant-picker,
+    .ant-select-selector {
+      background: rgba(50, 50, 50, 0.948044);
+      mix-blend-mode: normal;
+      opacity: 0.8;
+      border-radius: 4px;
+      color: #ffffff;
+    }
+  }
+  .ant-modal-close-icon {
+    background-color: #fff;
+  }
+}
+
+.ant-btn-primary {
+  background: #f65261;
+  border-radius: 4px;
+}
