@@ -5,6 +5,16 @@ import amovie from './assets/images/amovie.svg';
 import imovie from './assets/images/imovie.svg';
 import rmovie from './assets/images/rmovie.svg';
 
+export const genres = ['Crime', 'Documentary', 'Horror', 'Comedy'];
+
+export const tabsContent = [
+  { name: 'All', tabId: '1' },
+  { name: 'Documentary', tabId: '2' },
+  { name: 'Comedy', tabId: '3' },
+  { name: 'Horror', tabId: '4' },
+  { name: 'crime', tabId: '5' }
+];
+
 export const movieData = [
   {
     name: 'Pulp Fiction',

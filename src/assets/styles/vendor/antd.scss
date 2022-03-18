@@ -30,7 +30,9 @@
     border: none;
   }
 }
-
+.ant-modal-mask {
+  opacity: 0.89;
+}
 .ant-modal-body,
 .ant-modal,
 .ant-card {

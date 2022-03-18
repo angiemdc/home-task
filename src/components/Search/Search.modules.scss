@@ -9,14 +9,14 @@
   font-size: em(40);
   line-height: em(49);
   text-transform: uppercase;
-  form {
+  div {
     display: flex;
     flex-direction: row;
     gap: em(10);
     max-width: 100%;
     align-items: center;
   }
-  label {
+  div {
     flex: 1 2;
     .search__input {
       background: rgba(50, 50, 50, 0.8);

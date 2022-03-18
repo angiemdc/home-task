@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Actions } from '../../context/ModalContext';
-import { useAddDeleteModal } from '../../hooks/useAddDeleteModal';
+import { useModal } from '../../hooks/useModal';
 import { Logo } from '../Logo/Logo';
 import './Header.modules.scss';
 
 export const Header = ({ children }) => {
-  const { updateModalType } = useAddDeleteModal();
+  const { updateModalType } = useModal();
 
   const handleAddModal = (e) => {
     e.preventDefault();

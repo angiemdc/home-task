@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Row, Col } from 'antd';
 
-import { MovieCard } from '../MovieCard/MovieCard';
+import { MemoizedMovie } from '../MovieCard/MovieCard';
 
 /**
  *  return a list of cards 
@@ -16,20 +16,27 @@ import { MovieCard } from '../MovieCard/MovieCard';
 export const MovieCards = ({ movieData }) => {
   return (
     <Row gutter={[16, 16]}>
-      {movieData &&
-        movieData.map(({ id, ...others }) => (
-          <Col key={id} span={8}>
-            <MovieCard {...others} key={id} />
-          </Col>
-        ))}
+      {movieData.map(({ id, ...others }) => (
+        <Col key={id} span={8}>
+          <MemoizedMovie {...others} key={id} />
+        </Col>
+      ))}
     </Row>
   );
 };
 
 MovieCards.defaultProps = {
-  movieData: [{}]
+  movieData: []
 };
 
 MovieCards.propTypes = {
-  movieData: PropTypes.arrayOf(PropTypes.object)
+  movieData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      image: PropTypes.string,
+      movieType: PropTypes.string,
+      name: PropTypes.string,
+      year: PropTypes.string
+    })
+  )
 };

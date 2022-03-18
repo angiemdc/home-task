@@ -1,1 +1,1 @@
-export { useAddDeleteModal } from './useAddDeleteModal';
+export { useModal } from './useModal';

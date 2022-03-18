@@ -1,14 +1,14 @@
 import React, { Suspense, lazy } from 'react';
 import { Modal } from 'antd';
 import { Actions } from '../../context/ModalContext';
-import { useAddDeleteModal } from '../../hooks/useAddDeleteModal';
+import { useModal } from '../../hooks/useModal';
 import {
   Footer,
   Header,
   Search,
   ErrorBoundary,
   Layout,
-  AddEditContent
+  AddEditMovie
 } from '../../components';
 
 const TabsMovies = lazy(() =>
@@ -23,7 +23,7 @@ const TabsMovies = lazy(() =>
  */
 
 export const Home = () => {
-  const { state, updateModalType } = useAddDeleteModal();
+  const { state, updateModalType } = useModal();
   const { openModal } = state;
   const handleCancel = () => {
     updateModalType(Actions.CLOSE_MODAL);
@@ -43,14 +43,14 @@ export const Home = () => {
       </Layout>
       <Footer />
       <Modal
+        destroyOnClose
         visible={openModal}
         onCancel={handleCancel}
         centered
         footer={null}
         width={976}
-        maskStyle={{ opacity: '0.89' }}
       >
-        <AddEditContent />
+        <AddEditMovie />
       </Modal>
     </div>
   );

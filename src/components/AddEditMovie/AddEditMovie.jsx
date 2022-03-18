@@ -11,7 +11,9 @@ import {
   Row
 } from 'antd';
 
-import { useAddDeleteModal } from '../../hooks/useAddDeleteModal';
+import { genres } from '../../mock_data';
+
+import { useModal } from '../../hooks';
 
 import 'antd/dist/antd.css';
 
@@ -48,11 +50,10 @@ const tailFormItemLayout = {
   }
 };
 
-export const AddEditContent = () => {
-  const { state } = useAddDeleteModal();
+export const AddEditMovie = () => {
+  const { state } = useModal();
   const { openAdd, openEdit, title } = state;
   const [form] = Form.useForm();
-  const genres = ['Crime', 'Documentary', 'Horror', 'Comedy'];
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
@@ -92,12 +93,11 @@ export const AddEditContent = () => {
           <Row>
             <Form.Item name='genre' label='GENRE'>
               <Select placeholder='Select Genre'>
-                {genres &&
-                  genres.map((genre) => (
-                    <Option key={genre} value={genre}>
-                      <Checkbox>{genre}</Checkbox>
-                    </Option>
-                  ))}
+                {genres.map((genre) => (
+                  <Option key={genre} value={genre}>
+                    <Checkbox>{genre}</Checkbox>
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
             <Form.Item name='runtime' label='RUNTIME'>

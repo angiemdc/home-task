@@ -1,10 +1,25 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Space, Card, Row, Col, Menu, Dropdown, message } from 'antd';
 import { Actions } from '../../context/ModalContext';
-import { useAddDeleteModal } from '../../hooks/useAddDeleteModal';
+import { useModal } from '../../hooks/useModal';
+
+const DropdownMovie = () => {
+  const { updateModalType } = useModal();
+  function handleMenuClick(e) {
+    if (e.key === 'Edit') updateModalType(Actions.OPEN_MODAL_TO_EDIT);
+    if (e.key === 'Delete') updateModalType(Actions.OPEN_MODAL_TO_DELETE);
+  }
+
+  return (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key='Edit'>Edit</Menu.Item>
+      <Menu.Item key='Delete'>Delete</Menu.Item>
+    </Menu>
+  );
+};
 
 /**
  * Renders the Card of a movie
@@ -15,26 +30,11 @@ import { useAddDeleteModal } from '../../hooks/useAddDeleteModal';
 
  * @returns
  */
-
-export const MovieCard = ({ name, movieType, image, year }) => {
-  const { updateModalType } = useAddDeleteModal();
+const MovieCard = ({ name, movieType, image, year }) => {
   function handleButtonClick(e) {
     e.preventDefault();
     console.log('click left button', e);
   }
-
-  function handleMenuClick(e) {
-    console.log(e.key);
-    if (e.key === 'Edit') updateModalType(Actions.OPEN_MODAL_TO_EDIT);
-    if (e.key === 'Delete') updateModalType(Actions.OPEN_MODAL_TO_DELETE);
-  }
-
-  const menu = () => (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key='Edit'>Edit</Menu.Item>
-      <Menu.Item key='Delete'>Delete</Menu.Item>
-    </Menu>
-  );
 
   return (
     <Space size={24} direction='vertical'>
@@ -43,7 +43,7 @@ export const MovieCard = ({ name, movieType, image, year }) => {
           <Image width={324} src={image} preview={false} />
           <Dropdown.Button
             onClick={handleButtonClick}
-            overlay={menu}
+            overlay={DropdownMovie()}
             style={{
               padding: 0,
               position: 'absolute',
@@ -71,6 +71,8 @@ export const MovieCard = ({ name, movieType, image, year }) => {
     </Space>
   );
 };
+
+export const MemoizedMovie = React.memo(MovieCard);
 
 MovieCard.propTypes = {
   name: PropTypes.string.isRequired,
