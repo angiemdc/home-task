@@ -11,7 +11,9 @@ export const Actions = {
   CLOSE_MODAL_TO_EDIT: 'CLOSE_MODAL_TO_EDIT',
   CLOSE_MODAL_TO_ADD: 'CLOSE_MODAL_TO_ADD',
   CLOSE_MODAL_TO_DELETE: 'CLOSE_MODAL_TO_DELETE',
-  CLOSE_MODAL: 'TOGGLE_MODAL'
+  CLOSE_MODAL: 'TOGGLE_MODAL',
+  OPEN_DESCRIPTION: 'OPEN_DESCRIPTION',
+  CLOSE_DESCRIPTION: 'CLOSE_DESCRIPTION'
 };
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
   openDelete: false,
   title: '',
   openModal: false,
+  triggerDescription: false,
   movieContent: {
     datePicker: '',
     movieTitle: '',
@@ -27,12 +30,13 @@ const initialState = {
     rating: '',
     genre: '',
     runtime: '',
-    overview: ''
+    overview: '',
+    description: ''
   }
 };
 
 const ManageModalReducer = (state, action) => {
-  const { type } = action;
+  const { type, payload } = action;
   switch (type) {
     case Actions.OPEN_MODAL_TO_EDIT:
       return {
@@ -81,6 +85,17 @@ const ManageModalReducer = (state, action) => {
         ...state,
         ...initialState
       };
+    case Actions.OPEN_DESCRIPTION:
+      return {
+        ...state,
+        ...{ triggerDescription: !state.triggerDescription },
+        ...{ movieContent: payload }
+      };
+    case Actions.CLOSE_DESCRIPTION:
+      return {
+        ...state,
+        ...initialState
+      };
     default:
       return state;
   }
@@ -95,16 +110,21 @@ export const ModalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ManageModalReducer, initialState);
 
   const updateModalType = useCallback((type) => {
-    console.log(type);
     dispatch({ type });
   }, []);
+
+  const openMovieDescription = useCallback(
+    (object) => dispatch({ type: Actions.OPEN_DESCRIPTION, payload: object }),
+    []
+  );
 
   const Modal = useMemo(
     () => ({
       state,
-      updateModalType
+      updateModalType,
+      openMovieDescription
     }),
-    [state, updateModalType]
+    [state, updateModalType, openMovieDescription]
   );
 
   return (

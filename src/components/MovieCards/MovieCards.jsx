@@ -36,7 +36,10 @@ MovieCards.propTypes = {
       image: PropTypes.string,
       movieType: PropTypes.string,
       name: PropTypes.string,
-      year: PropTypes.string
+      year: PropTypes.string,
+      rating: PropTypes.string,
+      runtime: PropTypes.string,
+      description: PropTypes.string
     })
   )
 };

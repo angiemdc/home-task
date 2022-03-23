@@ -5,3 +5,4 @@ export { Search } from './Search/Search';
 export { ErrorBoundary } from './ErrorBoundary/ErrorBoundary';
 export { TabsMovies } from './TabsMovies/TabsMovies';
 export { AddEditMovie } from './AddEditMovie/AddEditMovie';
+export { MovieDescription } from './MovieDescription/MovieDescription';

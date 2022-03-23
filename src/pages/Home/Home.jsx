@@ -2,14 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Modal } from 'antd';
 import { Actions } from '../../context/ModalContext';
 import { useModal } from '../../hooks/useModal';
-import {
-  Footer,
-  Header,
-  Search,
-  ErrorBoundary,
-  Layout,
-  AddEditMovie
-} from '../../components';
+import { Footer, Header, Layout, AddEditMovie } from '../../components';
 
 const TabsMovies = lazy(() =>
   import('../../components').then((module) => ({
@@ -31,11 +24,7 @@ export const Home = () => {
 
   return (
     <div>
-      <Header>
-        <ErrorBoundary>
-          <Search details={[]} />
-        </ErrorBoundary>
-      </Header>
+      <Header />
       <Layout>
         <Suspense fallback={<div>Loading...</div>}>
           <TabsMovies />

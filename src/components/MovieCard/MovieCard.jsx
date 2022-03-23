@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-bind */
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Image, Space, Card, Row, Col, Menu, Dropdown, message } from 'antd';
 import { Actions } from '../../context/ModalContext';
@@ -8,10 +8,10 @@ import { useModal } from '../../hooks/useModal';
 
 const DropdownMovie = () => {
   const { updateModalType } = useModal();
-  function handleMenuClick(e) {
+  const handleMenuClick = (e) => {
     if (e.key === 'Edit') updateModalType(Actions.OPEN_MODAL_TO_EDIT);
     if (e.key === 'Delete') updateModalType(Actions.OPEN_MODAL_TO_DELETE);
-  }
+  };
 
   return (
     <Menu onClick={handleMenuClick}>
@@ -30,19 +30,22 @@ const DropdownMovie = () => {
 
  * @returns
  */
-const MovieCard = ({ name, movieType, image, year }) => {
-  function handleButtonClick(e) {
-    e.preventDefault();
-    console.log('click left button', e);
-  }
-
+const MovieCard = (props) => {
+  const { name, movieType, image, year } = props;
+  const { openMovieDescription } = useModal();
+  const setDetail = useCallback(
+    (e) => {
+      e.preventDefault();
+      openMovieDescription({ ...props });
+    },
+    [openMovieDescription, props]
+  );
   return (
     <Space size={24} direction='vertical'>
       <Card style={{ width: 324 }}>
         <Col span={24} style={{ paddingLeft: 0, position: 'relative' }}>
-          <Image width={324} src={image} preview={false} />
+          <Image width={324} src={image} preview={false} onClick={setDetail} />
           <Dropdown.Button
-            onClick={handleButtonClick}
             overlay={DropdownMovie()}
             style={{
               padding: 0,
