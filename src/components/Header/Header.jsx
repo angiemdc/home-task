@@ -1,31 +1,67 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Suspense, lazy } from 'react';
+
+import { Button, Image } from 'antd';
 import { Actions } from '../../context/ModalContext';
 import { useModal } from '../../hooks/useModal';
 import { Logo } from '../Logo/Logo';
+import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
+import sButton from '../../assets/images/searchButton.svg';
 import './Header.modules.scss';
 
-export const Header = ({ children }) => {
-  const { updateModalType } = useModal();
+const MovieDescription = lazy(() =>
+  import('../MovieDescription/MovieDescription').then((module) => ({
+    default: module.MovieDescription
+  }))
+);
+
+const Search = lazy(() =>
+  import('../Search/Search').then((module) => ({
+    default: module.Search
+  }))
+);
+
+export const Header = () => {
+  const { updateModalType, state } = useModal();
+  const { triggerDescription, movieContent } = state;
 
   const handleAddModal = (e) => {
     e.preventDefault();
-    console.log(Actions.OPEN_MODAL_TO_ADD);
     updateModalType(Actions.OPEN_MODAL_TO_ADD);
   };
+  const handleCloseDescription = () => {
+    updateModalType(Actions.CLOSE_DESCRIPTION);
+  };
+
   return (
-    <header className='header'>
+    <header
+      className={`header ${!triggerDescription ? 'header__withImage' : ''}`}
+    >
       <div className='navSection'>
         <Logo />
-        <button type='button' className='btn' onClick={handleAddModal}>
-          + ADD MOVIE
-        </button>
+
+        {triggerDescription ? (
+          <Button
+            icon={<Image width={10} src={sButton} preview={false} />}
+            ghost
+            onClick={handleCloseDescription}
+          />
+        ) : (
+          <button type='button' className='btn' onClick={handleAddModal}>
+            + ADD MOVIE
+          </button>
+        )}
       </div>
-      <div>{children}</div>
+      <ErrorBoundary>
+        {triggerDescription ? (
+          <Suspense>
+            <MovieDescription movieContent={movieContent} />
+          </Suspense>
+        ) : (
+          <Suspense>
+            <Search />
+          </Suspense>
+        )}
+      </ErrorBoundary>
     </header>
   );
-};
-
-Header.propTypes = {
-  children: PropTypes.element.isRequired
 };

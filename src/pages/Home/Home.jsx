@@ -1,21 +1,14 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { Modal } from 'antd';
 import { Actions } from '../../context/ModalContext';
 import { useModal } from '../../hooks/useModal';
 import {
   Footer,
   Header,
-  Search,
-  ErrorBoundary,
   Layout,
-  AddEditMovie
+  AddEditMovie,
+  TabsMovies
 } from '../../components';
-
-const TabsMovies = lazy(() =>
-  import('../../components').then((module) => ({
-    default: module.TabsMovies
-  }))
-);
 
 /**
  * Renders the main Home of the APP
@@ -31,15 +24,9 @@ export const Home = () => {
 
   return (
     <div>
-      <Header>
-        <ErrorBoundary>
-          <Search details={[]} />
-        </ErrorBoundary>
-      </Header>
+      <Header />
       <Layout>
-        <Suspense fallback={<div>Loading...</div>}>
-          <TabsMovies />
-        </Suspense>
+        <TabsMovies />
       </Layout>
       <Footer />
       <Modal

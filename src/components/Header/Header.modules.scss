@@ -4,12 +4,15 @@
   flex-direction: column;
   min-width: 100%;
   height: $header-height;
-  background-image: url('../../assets/images/Bitmap.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top;
   padding: em(20);
   margin-bottom: em(20);
+  background-color: $black;
+  &__withImage {
+    background-image: url('../../assets/images/Bitmap.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+  }
   .navSection {
     display: flex;
     flex-direction: row;
