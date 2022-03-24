@@ -3,15 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Image, Space, Row, Col } from 'antd';
 
-export const MovieDescription = ({
-  name,
-  movieType,
-  image,
-  year,
-  rating,
-  runtime,
-  description
-}) => {
+export const MovieDescription = ({ movieContent }) => {
+  const { name, movieType, image, year, rating, runtime, description } =
+    movieContent;
   return (
     <Space size={24} direction='vertical'>
       <Row gutter={[1, 24]} align='middle'>
@@ -35,12 +29,18 @@ export const MovieDescription = ({
   );
 };
 
+MovieDescription.defaultProps = {
+  movieContent: {}
+};
+
 MovieDescription.propTypes = {
-  name: PropTypes.string.isRequired,
-  movieType: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  rating: PropTypes.string.isRequired,
-  runtime: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
+  movieContent: PropTypes.shape({
+    name: PropTypes.string,
+    movieType: PropTypes.string,
+    image: PropTypes.string,
+    year: PropTypes.string,
+    rating: PropTypes.string,
+    runtime: PropTypes.string,
+    description: PropTypes.string
+  })
 };

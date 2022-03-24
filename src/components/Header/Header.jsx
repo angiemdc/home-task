@@ -1,28 +1,36 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useCallback } from 'react';
+import React, { Suspense, lazy } from 'react';
 
 import { Button, Image } from 'antd';
 import { Actions } from '../../context/ModalContext';
 import { useModal } from '../../hooks/useModal';
 import { Logo } from '../Logo/Logo';
-import { Search } from '../Search/Search';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
-import { MovieDescription } from '../MovieDescription/MovieDescription';
 import sButton from '../../assets/images/searchButton.svg';
 import './Header.modules.scss';
+
+const MovieDescription = lazy(() =>
+  import('../MovieDescription/MovieDescription').then((module) => ({
+    default: module.MovieDescription
+  }))
+);
+
+const Search = lazy(() =>
+  import('../Search/Search').then((module) => ({
+    default: module.Search
+  }))
+);
 
 export const Header = () => {
   const { updateModalType, state } = useModal();
   const { triggerDescription, movieContent } = state;
-  console.log(movieContent);
 
   const handleAddModal = (e) => {
     e.preventDefault();
     updateModalType(Actions.OPEN_MODAL_TO_ADD);
   };
-  const handleCloseDescription = useCallback(() => {
+  const handleCloseDescription = () => {
     updateModalType(Actions.CLOSE_DESCRIPTION);
-  }, [updateModalType]);
+  };
 
   return (
     <header
@@ -45,9 +53,13 @@ export const Header = () => {
       </div>
       <ErrorBoundary>
         {triggerDescription ? (
-          <MovieDescription {...movieContent} />
+          <Suspense>
+            <MovieDescription movieContent={movieContent} />
+          </Suspense>
         ) : (
-          <Search />
+          <Suspense>
+            <Search />
+          </Suspense>
         )}
       </ErrorBoundary>
     </header>
