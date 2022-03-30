@@ -46,21 +46,19 @@ export const Header = () => {
             onClick={handleCloseDescription}
           />
         ) : (
-          <button type='button' className='btn' onClick={handleAddModal}>
+          <Button type='button' className='btn' onClick={handleAddModal}>
             + ADD MOVIE
-          </button>
+          </Button>
         )}
       </div>
       <ErrorBoundary>
-        {triggerDescription ? (
-          <Suspense>
+        <Suspense fallback={<h1>loading...</h1>}>
+          {triggerDescription ? (
             <MovieDescription movieContent={movieContent} />
-          </Suspense>
-        ) : (
-          <Suspense>
+          ) : (
             <Search />
-          </Suspense>
-        )}
+          )}
+        </Suspense>
       </ErrorBoundary>
     </header>
   );

@@ -16,7 +16,7 @@ export const TabsMovies = () => {
         return (
           <TabPane tab={name} key={tabId}>
             <ErrorBoundary>
-              <MovieCards movieData={movieData} />
+              <MovieCards moviesData={movieData} />
             </ErrorBoundary>
           </TabPane>
         );

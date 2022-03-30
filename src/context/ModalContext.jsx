@@ -23,6 +23,17 @@ const initialState = {
   title: '',
   openModal: false,
   triggerDescription: false,
+  id: '',
+  editContent: {
+    description: '',
+    id: '',
+    image: '',
+    movieType: '',
+    name: '',
+    rating: '',
+    runtime: '',
+    year: ''
+  },
   movieContent: {
     datePicker: '',
     movieTitle: '',
@@ -31,7 +42,12 @@ const initialState = {
     genre: '',
     runtime: '',
     overview: '',
-    description: ''
+    description: '',
+    id: '',
+    image: '',
+    year: '',
+    name: '',
+    movieType: ''
   }
 };
 
@@ -41,6 +57,7 @@ const ManageModalReducer = (state, action) => {
     case Actions.OPEN_MODAL_TO_EDIT:
       return {
         ...state,
+        ...{ editContent: payload },
         ...{
           openEdit: !state.openEdit,
           title: 'EDIT MOVIE',
@@ -72,7 +89,8 @@ const ManageModalReducer = (state, action) => {
         ...{
           openDelete: !state.openDelete,
           title: 'DELETE MOVIE',
-          openModal: !state.openModal
+          openModal: !state.openModal,
+          id: payload
         }
       };
     case Actions.CLOSE_MODAL_TO_DELETE:
@@ -109,8 +127,12 @@ const ManageModalReducer = (state, action) => {
 export const ModalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ManageModalReducer, initialState);
 
-  const updateModalType = useCallback((type) => {
-    dispatch({ type });
+  const updateModalType = useCallback((type, object = {}) => {
+    dispatch({ type, payload: object });
+  }, []);
+
+  const deletedMovie = useCallback((id = '') => {
+    dispatch({ type: Actions.OPEN_MODAL_TO_DELETE, payload: id });
   }, []);
 
   const openMovieDescription = useCallback(
@@ -122,9 +144,10 @@ export const ModalProvider = ({ children }) => {
     () => ({
       state,
       updateModalType,
+      deletedMovie,
       openMovieDescription
     }),
-    [state, updateModalType, openMovieDescription]
+    [state, updateModalType, openMovieDescription, deletedMovie]
   );
 
   return (

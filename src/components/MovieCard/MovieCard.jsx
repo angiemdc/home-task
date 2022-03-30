@@ -6,11 +6,12 @@ import { Image, Space, Card, Row, Col, Menu, Dropdown, message } from 'antd';
 import { Actions } from '../../context/ModalContext';
 import { useModal } from '../../hooks/useModal';
 
-const DropdownMovie = () => {
-  const { updateModalType } = useModal();
+const DropdownMovie = (props) => {
+  const { updateModalType, deletedMovie } = useModal();
+  const { id } = props;
   const handleMenuClick = (e) => {
-    if (e.key === 'Edit') updateModalType(Actions.OPEN_MODAL_TO_EDIT);
-    if (e.key === 'Delete') updateModalType(Actions.OPEN_MODAL_TO_DELETE);
+    if (e.key === 'Edit') updateModalType(Actions.OPEN_MODAL_TO_EDIT, props);
+    if (e.key === 'Delete') deletedMovie(id);
   };
 
   return (
@@ -30,15 +31,15 @@ const DropdownMovie = () => {
 
  * @returns
  */
-const MovieCard = (props) => {
-  const { name, movieType, image, year } = props;
+const MovieCard = ({ movieData }) => {
+  const { name, movieType, image, year } = movieData;
   const { openMovieDescription } = useModal();
   const setDetail = useCallback(
     (e) => {
       e.preventDefault();
-      openMovieDescription({ ...props });
+      openMovieDescription({ ...movieData });
     },
-    [openMovieDescription, props]
+    [openMovieDescription, movieData]
   );
   return (
     <Space size={24} direction='vertical'>
@@ -46,7 +47,7 @@ const MovieCard = (props) => {
         <Col span={24} style={{ paddingLeft: 0, position: 'relative' }}>
           <Image width={324} src={image} preview={false} onClick={setDetail} />
           <Dropdown.Button
-            overlay={DropdownMovie()}
+            overlay={DropdownMovie(movieData)}
             style={{
               padding: 0,
               position: 'absolute',

@@ -1,130 +1,175 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { Formik } from 'formik';
+
 import {
-  Card,
-  Form,
+  SubmitButton,
   Input,
-  Button,
-  DatePicker,
-  Select,
   Checkbox,
-  Row
-} from 'antd';
+  ResetButton,
+  Form,
+  Select,
+  DatePicker,
+  FormItem
+} from 'formik-antd';
+
+import { Card, Button, Row, message, Col } from 'antd';
 
 import { genres } from '../../mock_data';
 
 import { useModal } from '../../hooks';
 
 import 'antd/dist/antd.css';
+import './AddEditMovie.modules.scss';
 
 const { Option } = Select;
 
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24
-    },
-    sm: {
-      span: 8
-    }
-  },
-  wrapperCol: {
-    xs: {
-      span: 24
-    },
-    sm: {
-      span: 16
-    }
-  }
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0
-    },
-    sm: {
-      span: 16,
-      offset: 8
-    }
-  }
+const validateRequired = (value) => {
+  return value ? undefined : 'required';
 };
 
 export const AddEditMovie = () => {
   const { state } = useModal();
+  const {
+    editContent: { description, image, movieType, name, rating, runtime },
+    id
+  } = state;
   const { openAdd, openEdit, title } = state;
-  const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
 
   const cardWithAddEdit = openAdd || openEdit;
+
+  const deleteMove = () => {
+    console.log(`deleted move ${id}`);
+  };
 
   return (
     <Card title={title} bordered={false} style={{ width: 860 }}>
       {cardWithAddEdit ? (
-        <Form
-          {...formItemLayout}
-          form={form}
-          layout='vertical'
-          name='register'
-          onFinish={onFinish}
-          initialValues={{}}
-          scrollToFirstError
-        >
-          <Row>
-            <Form.Item name='movie-title' label='TITLE'>
-              <Input placeholder='Please enter movie title' />
-            </Form.Item>
+        <Formik
+          initialValues={{
+            title: name,
+            movieUrl: image,
+            overview: description,
+            genre: movieType,
+            rating,
+            runtime
+          }}
+          onSubmit={(values, actions) => {
+            message.info(JSON.stringify(values, null, 4));
+            actions.setSubmitting(false);
+            actions.resetForm();
+          }}
+          validate={(values) => {
+            if (!values.title) {
+              return { title: 'required' };
+            }
+            return {};
+          }}
+          render={() => (
+            <Form layout='vertical' name='register' scrollToFirstError>
+              <Row gutter={[24, 16]} justify='space-around' wrap>
+                <Col span={12}>
+                  <FormItem
+                    name='title'
+                    label='TITLE'
+                    required
+                    validate={validateRequired}
+                  >
+                    <Input
+                      name='title'
+                      placeholder='Please enter movie title'
+                    />
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem name='datePicker' label='RELEASE DATE'>
+                    <DatePicker
+                      placeholder='Select Date'
+                      size='middle'
+                      className='date'
+                    />
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem
+                    name='movieUrl'
+                    label='MOVIE URL'
+                    required
+                    validate={validateRequired}
+                  >
+                    <Input name='movieUrl' placeholder='https://' />
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem name='rating' label='RATING'>
+                    <Input name='rating' placeholder='7.8' />
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem
+                    name='genre'
+                    label='GENRE'
+                    required
+                    validate={validateRequired}
+                  >
+                    <Select name='genre' placeholder='Select Genre'>
+                      {genres.map((genre) => (
+                        <Option key={genre} value={genre}>
+                          <Checkbox>{genre}</Checkbox>
+                        </Option>
+                      ))}
+                    </Select>
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem
+                    name='runtime'
+                    label='RUNTIME'
+                    required
+                    validate={validateRequired}
+                  >
+                    <Input name='runtime' placeholder='Minutes' />
+                  </FormItem>
+                </Col>
+                <Col span={24}>
+                  <FormItem
+                    name='overview'
+                    label='OVERVIEW'
+                    required
+                    validate={validateRequired}
+                  >
+                    <Input.TextArea
+                      name='overview'
+                      allowClear
+                      showCount
+                      placeholder='Movie description'
+                    />
+                  </FormItem>
+                </Col>
+              </Row>
 
-            <Form.Item name='date-picker' label='RELEASE DATE'>
-              <DatePicker placeholder='Select Date' />
-            </Form.Item>
-          </Row>
-
-          <Row>
-            <Form.Item name='movie-url' label='MOVIE URL'>
-              <Input placeholder='https://' />
-            </Form.Item>
-            <Form.Item name='rating' label='RATING'>
-              <Input placeholder='7.8' />
-            </Form.Item>
-          </Row>
-          <Row>
-            <Form.Item name='genre' label='GENRE'>
-              <Select placeholder='Select Genre'>
-                {genres.map((genre) => (
-                  <Option key={genre} value={genre}>
-                    <Checkbox>{genre}</Checkbox>
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item name='runtime' label='RUNTIME'>
-              <Input placeholder='Minutes' />
-            </Form.Item>
-          </Row>
-          <Row>
-            <Form.Item name='overview' label='OVERVIEW'>
-              <Input.TextArea
-                allowClear
-                showCount
-                placeholder='Movie description'
-              />
-            </Form.Item>
-          </Row>
-
-          <Form.Item {...tailFormItemLayout}>
-            <Button type='primary' htmlType='submit'>
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+              <Row gutter={32}>
+                <Col offset={16}>
+                  <Button.Group>
+                    <ResetButton type='secondary'>Reset</ResetButton>
+                    <SubmitButton type='primary' htmlType='submit'>
+                      Submit
+                    </SubmitButton>
+                  </Button.Group>
+                </Col>
+              </Row>
+            </Form>
+          )}
+        />
       ) : (
-        <>
+        <Row gutter={32}>
           <p>Are you sure you want to delete this movie?</p>
-          <Button type='primary'>Confirm</Button>
-        </>
+          <Col offset={16}>
+            <Button type='primary' onClick={deleteMove}>
+              Confirm
+            </Button>
+          </Col>
+        </Row>
       )}
     </Card>
   );
