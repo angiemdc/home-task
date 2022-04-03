@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Formik } from 'formik';
-
 import {
   SubmitButton,
   Input,
@@ -13,11 +12,11 @@ import {
   FormItem
 } from 'formik-antd';
 
-import { Card, Button, Row, message, Col } from 'antd';
+import { Card, Button, Row, Col } from 'antd';
+import { useMovieData } from '../../hooks/useMovieData';
+import { Actions } from '../../context/MovieContext';
 
 import { genres } from '../../mock_data';
-
-import { useModal } from '../../hooks';
 
 import 'antd/dist/antd.css';
 import './AddEditMovie.modules.scss';
@@ -28,36 +27,40 @@ const validateRequired = (value) => {
   return value ? undefined : 'required';
 };
 
-export const AddEditMovie = () => {
-  const { state } = useModal();
-  const {
-    editContent: { description, image, movieType, name, rating, runtime },
-    id
-  } = state;
-  const { openAdd, openEdit, title } = state;
-
+export const AddEditMovie = ({
+  title,
+  openAdd,
+  openEdit,
+  id,
+  handleCancel,
+  initialValues = {
+    title: '',
+    movieUrl: '',
+    overview: '',
+    genre: '',
+    rating: '',
+    runtime: ''
+  }
+}) => {
   const cardWithAddEdit = openAdd || openEdit;
+  const { AddEditMovieData } = useMovieData();
+  const actionType = openAdd ? Actions.TO_ADD : Actions.TO_EDIT;
 
   const deleteMove = () => {
     console.log(`deleted move ${id}`);
+    handleCancel();
   };
 
   return (
     <Card title={title} bordered={false} style={{ width: 860 }}>
       {cardWithAddEdit ? (
         <Formik
-          initialValues={{
-            title: name,
-            movieUrl: image,
-            overview: description,
-            genre: movieType,
-            rating,
-            runtime
-          }}
+          initialValues={initialValues}
           onSubmit={(values, actions) => {
-            message.info(JSON.stringify(values, null, 4));
             actions.setSubmitting(false);
             actions.resetForm();
+            AddEditMovieData(actionType, values);
+            handleCancel();
           }}
           validate={(values) => {
             if (!values.title) {
@@ -65,7 +68,8 @@ export const AddEditMovie = () => {
             }
             return {};
           }}
-          render={() => (
+        >
+          {() => (
             <Form layout='vertical' name='register' scrollToFirstError>
               <Row gutter={[24, 16]} justify='space-around' wrap>
                 <Col span={12}>
@@ -82,22 +86,23 @@ export const AddEditMovie = () => {
                   </FormItem>
                 </Col>
                 <Col span={12}>
-                  <FormItem name='datePicker' label='RELEASE DATE'>
+                  <FormItem name='year' label='RELEASE DATE'>
                     <DatePicker
                       placeholder='Select Date'
                       size='middle'
                       className='date'
+                      name='year'
                     />
                   </FormItem>
                 </Col>
                 <Col span={12}>
                   <FormItem
-                    name='movieUrl'
+                    name='image'
                     label='MOVIE URL'
                     required
                     validate={validateRequired}
                   >
-                    <Input name='movieUrl' placeholder='https://' />
+                    <Input name='image' placeholder='https://' />
                   </FormItem>
                 </Col>
                 <Col span={12}>
@@ -133,13 +138,13 @@ export const AddEditMovie = () => {
                 </Col>
                 <Col span={24}>
                   <FormItem
-                    name='overview'
+                    name='description'
                     label='OVERVIEW'
                     required
                     validate={validateRequired}
                   >
                     <Input.TextArea
-                      name='overview'
+                      name='description'
                       allowClear
                       showCount
                       placeholder='Movie description'
@@ -160,7 +165,7 @@ export const AddEditMovie = () => {
               </Row>
             </Form>
           )}
-        />
+        </Formik>
       ) : (
         <Row gutter={32}>
           <p>Are you sure you want to delete this movie?</p>

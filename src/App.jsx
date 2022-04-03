@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalProvider } from './context/ModalContext';
+import { ModalProvider } from './context/MovieContext';
 
 import { Home } from './pages/Home/Home';
 

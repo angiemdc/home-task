@@ -1,10 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useState, useCallback } from 'react';
 
 import { Button, Image } from 'antd';
-import { Actions } from '../../context/ModalContext';
-import { useModal } from '../../hooks/useModal';
+import { useMovieData } from '../../hooks/useMovieData';
 import { Logo } from '../Logo/Logo';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
+import { CustomModal } from '../CustomModal/CustomModal';
+import { AddEditMovie } from '../AddEditMovie/AddEditMovie';
 import sButton from '../../assets/images/searchButton.svg';
 import './Header.modules.scss';
 
@@ -21,16 +22,19 @@ const Search = lazy(() =>
 );
 
 export const Header = () => {
-  const { updateModalType, state } = useModal();
-  const { triggerDescription, movieContent } = state;
+  const {
+    state: { triggerDescription, movieContent }
+  } = useMovieData();
+
+  const [openModal, setOpenModal] = useState(false);
 
   const handleAddModal = (e) => {
     e.preventDefault();
-    updateModalType(Actions.OPEN_MODAL_TO_ADD);
+    setOpenModal(!openModal);
   };
-  const handleCloseDescription = () => {
-    updateModalType(Actions.CLOSE_DESCRIPTION);
-  };
+  const handleCloseDescription = useCallback(() => {
+    setOpenModal(!openModal);
+  }, [openModal, setOpenModal]);
 
   return (
     <header
@@ -60,6 +64,13 @@ export const Header = () => {
           )}
         </Suspense>
       </ErrorBoundary>
+      <CustomModal openModal={openModal} handleCancel={handleCloseDescription}>
+        <AddEditMovie
+          title='ADD MOVIE'
+          openAdd
+          handleCancel={handleCloseDescription}
+        />
+      </CustomModal>
     </header>
   );
 };

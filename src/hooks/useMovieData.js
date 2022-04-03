@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { ModalContext } from '../context/ModalContext';
+import { MovieContext } from '../context/MovieContext';
 
 /**
  * Hook to open modal  with Add, Edit and Deleted
  * @returns Modal object
  */
-export const useModal = () => useContext(ModalContext);
+export const useMovieData = () => useContext(MovieContext);

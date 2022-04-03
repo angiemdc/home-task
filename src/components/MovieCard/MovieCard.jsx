@@ -3,15 +3,12 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Image, Space, Card, Row, Col, Menu, Dropdown, message } from 'antd';
-import { Actions } from '../../context/ModalContext';
-import { useModal } from '../../hooks/useModal';
+import { Actions } from '../../context/MovieContext';
 
 const DropdownMovie = (props) => {
-  const { updateModalType, deletedMovie } = useModal();
-  const { id } = props;
   const handleMenuClick = (e) => {
-    if (e.key === 'Edit') updateModalType(Actions.OPEN_MODAL_TO_EDIT, props);
-    if (e.key === 'Delete') deletedMovie(id);
+    if (e.key === 'Edit') console.log('holi');
+    if (e.key === 'Delete') console.log('hi');
   };
 
   return (
@@ -33,14 +30,9 @@ const DropdownMovie = (props) => {
  */
 const MovieCard = ({ movieData }) => {
   const { name, movieType, image, year } = movieData;
-  const { openMovieDescription } = useModal();
-  const setDetail = useCallback(
-    (e) => {
-      e.preventDefault();
-      openMovieDescription({ ...movieData });
-    },
-    [openMovieDescription, movieData]
-  );
+  const setDetail = useCallback((e) => {
+    e.preventDefault();
+  }, []);
   return (
     <Space size={24} direction='vertical'>
       <Card style={{ width: 324 }}>
