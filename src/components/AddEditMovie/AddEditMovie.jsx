@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import {
   SubmitButton,
@@ -11,11 +12,9 @@ import {
   DatePicker,
   FormItem
 } from 'formik-antd';
-
 import { Card, Button, Row, Col } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
 import { Actions } from '../../context/MovieContext';
-
 import { genres } from '../../mock_data';
 
 import 'antd/dist/antd.css';
@@ -43,11 +42,11 @@ export const AddEditMovie = ({
   }
 }) => {
   const cardWithAddEdit = openAdd || openEdit;
-  const { AddEditMovieData } = useMovieData();
+  const { addEditMovieData, deletedMovie } = useMovieData();
   const actionType = openAdd ? Actions.TO_ADD : Actions.TO_EDIT;
 
-  const deleteMove = () => {
-    console.log(`deleted move ${id}`);
+  const handleDeleteMove = () => {
+    deletedMovie(id);
     handleCancel();
   };
 
@@ -57,9 +56,10 @@ export const AddEditMovie = ({
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
+            const formatYear = new Date(values.year).getFullYear();
             actions.setSubmitting(false);
             actions.resetForm();
-            AddEditMovieData(actionType, values);
+            addEditMovieData(actionType, { ...values, year: formatYear });
             handleCancel();
           }}
           validate={(values) => {
@@ -92,6 +92,7 @@ export const AddEditMovie = ({
                       size='middle'
                       className='date'
                       name='year'
+                      picker='year'
                     />
                   </FormItem>
                 </Col>
@@ -113,7 +114,7 @@ export const AddEditMovie = ({
                 <Col span={12}>
                   <FormItem
                     name='genre'
-                    label='GENRE'
+                    value='GENRE'
                     required
                     validate={validateRequired}
                   >
@@ -170,7 +171,7 @@ export const AddEditMovie = ({
         <Row gutter={32}>
           <p>Are you sure you want to delete this movie?</p>
           <Col offset={16}>
-            <Button type='primary' onClick={deleteMove}>
+            <Button type='primary' onClick={handleDeleteMove}>
               Confirm
             </Button>
           </Col>
@@ -178,4 +179,26 @@ export const AddEditMovie = ({
       )}
     </Card>
   );
+};
+
+AddEditMovie.defaultProps = {
+  openAdd: false,
+  openEdit: false,
+  id: '',
+  initialValues: {}
+};
+
+AddEditMovie.propTypes = {
+  title: PropTypes.string.isRequired,
+  openAdd: PropTypes.bool,
+  openEdit: PropTypes.bool,
+  id: PropTypes.string,
+  handleCancel: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({
+    title: PropTypes.string,
+    movieUrl: PropTypes.string,
+    description: PropTypes.string,
+    year: PropTypes.string,
+    id: PropTypes.string
+  })
 };

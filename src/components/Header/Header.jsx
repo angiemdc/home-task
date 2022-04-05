@@ -1,5 +1,4 @@
 import React, { Suspense, lazy, useState, useCallback } from 'react';
-
 import { Button, Image } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
 import { Logo } from '../Logo/Logo';
@@ -7,6 +6,7 @@ import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { AddEditMovie } from '../AddEditMovie/AddEditMovie';
 import sButton from '../../assets/images/searchButton.svg';
+
 import './Header.modules.scss';
 
 const MovieDescription = lazy(() =>
@@ -22,17 +22,18 @@ const Search = lazy(() =>
 );
 
 export const Header = () => {
-  const {
-    state: { triggerDescription, movieContent }
-  } = useMovieData();
-
   const [openModal, setOpenModal] = useState(false);
+  const {
+    state: { triggerDescription, movieContent },
+    closeMovieDescription
+  } = useMovieData();
 
   const handleAddModal = (e) => {
     e.preventDefault();
     setOpenModal(!openModal);
   };
-  const handleCloseDescription = useCallback(() => {
+
+  const handleCloseModal = useCallback(() => {
     setOpenModal(!openModal);
   }, [openModal, setOpenModal]);
 
@@ -47,7 +48,7 @@ export const Header = () => {
           <Button
             icon={<Image width={10} src={sButton} preview={false} />}
             ghost
-            onClick={handleCloseDescription}
+            onClick={() => closeMovieDescription()}
           />
         ) : (
           <Button type='button' className='btn' onClick={handleAddModal}>
@@ -64,11 +65,11 @@ export const Header = () => {
           )}
         </Suspense>
       </ErrorBoundary>
-      <CustomModal openModal={openModal} handleCancel={handleCloseDescription}>
+      <CustomModal openModal={openModal} handleCancel={handleCloseModal}>
         <AddEditMovie
           title='ADD MOVIE'
           openAdd
-          handleCancel={handleCloseDescription}
+          handleCancel={handleCloseModal}
         />
       </CustomModal>
     </header>

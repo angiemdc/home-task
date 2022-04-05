@@ -20,19 +20,14 @@ const initialState = {
   id: '',
   moviesData: cloneDeep(movieData),
   movieContent: {
-    datePicker: '',
-    movieTitle: '',
-    movieUrl: '',
-    rating: '',
-    genre: '',
-    runtime: '',
-    overview: '',
-    description: '',
+    title: '',
+    movieType: '',
     id: '',
     image: '',
     year: '',
-    name: '',
-    movieType: ''
+    rating: '',
+    runtime: '',
+    description: ''
   }
 };
 
@@ -44,7 +39,7 @@ const ManageModalReducer = (state, action) => {
       return {
         ...state,
         ...{
-          movieData: arrayToModify.map((movie) => {
+          moviesData: arrayToModify.map((movie) => {
             if (movie.id === payload.id) {
               return payload;
             }
@@ -59,26 +54,29 @@ const ManageModalReducer = (state, action) => {
 
       return {
         ...state,
-        ...{ movieData: arrayToModify.push({ ...newPayload, id: generateId }) }
+        ...{ moviesData: arrayToModify.push({ ...newPayload, id: generateId }) }
       };
     }
     case Actions.TO_DELETE:
       return {
         ...state,
-        ...{ movieData: arrayToModify.filter(({ id }) => id !== payload) }
+        ...{ moviesData: arrayToModify.filter(({ id }) => id !== payload) }
       };
 
-    case Actions.OPEN_DESCRIPTION:
+    case Actions.OPEN_DESCRIPTION: {
+      const filteredMovie = arrayToModify.filter(({ id }) => id === payload);
       return {
         ...state,
         ...{ triggerDescription: !state.triggerDescription },
-        ...{ movieContent: payload }
+        ...{ movieContent: filteredMovie?.[0] }
       };
-    case Actions.CLOSE_DESCRIPTION:
+    }
+    case Actions.CLOSE_DESCRIPTION: {
       return {
         ...state,
-        ...initialState
+        ...{ triggerDescription: !state.triggerDescription }
       };
+    }
     default:
       return state;
   }
@@ -92,27 +90,39 @@ const ManageModalReducer = (state, action) => {
 export const ModalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ManageModalReducer, initialState);
 
-  const AddEditMovieData = useCallback((type, object = {}) => {
+  const addEditMovieData = useCallback((type, object = {}) => {
     dispatch({ type, payload: object });
   }, []);
 
   const deletedMovie = useCallback((id = '') => {
-    dispatch({ type: Actions.OPEN_MODAL_TO_DELETE, payload: id });
+    dispatch({ type: Actions.TO_DELETE, payload: id });
   }, []);
 
   const openMovieDescription = useCallback(
-    (object) => dispatch({ type: Actions.OPEN_DESCRIPTION, payload: object }),
+    (id = '') => dispatch({ type: Actions.OPEN_DESCRIPTION, payload: id }),
+    []
+  );
+
+  const closeMovieDescription = useCallback(
+    () => dispatch({ type: Actions.CLOSE_DESCRIPTION }),
     []
   );
 
   const Modal = useMemo(
     () => ({
       state,
-      AddEditMovieData,
+      addEditMovieData,
       deletedMovie,
-      openMovieDescription
+      openMovieDescription,
+      closeMovieDescription
     }),
-    [state, AddEditMovieData, openMovieDescription, deletedMovie]
+    [
+      state,
+      addEditMovieData,
+      openMovieDescription,
+      deletedMovie,
+      closeMovieDescription
+    ]
   );
 
   return (
