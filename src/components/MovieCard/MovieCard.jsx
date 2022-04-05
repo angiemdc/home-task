@@ -6,6 +6,7 @@ import { CustomModal } from '../CustomModal/CustomModal';
 import { AddEditMovie } from '../AddEditMovie/AddEditMovie';
 
 import 'antd/dist/antd.css';
+import './MovieCard.modules.scss';
 
 const DropdownMovie = React.memo(({ handleMenuClick }) => {
   return (
@@ -66,9 +67,9 @@ const MovieCard = ({ movieData }) => {
 
   return (
     <Space size={24} direction='vertical'>
-      <Card style={{ width: 324 }}>
+      <Card className='customCard' bordered={false}>
         <Col span={24} style={{ paddingLeft: 0, position: 'relative' }}>
-          <Image width={324} src={image} preview={false} onClick={setDetail} />
+          <Image width={320} src={image} preview={false} onClick={setDetail} />
           <DropdownMovie handleMenuClick={handleMenuClick} />
         </Col>
         <Row gutter={[1, 16]} align='middle' justify='space-between'>
