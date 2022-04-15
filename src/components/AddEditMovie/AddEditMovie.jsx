@@ -50,24 +50,28 @@ export const AddEditMovie = ({
     handleCancel();
   };
 
+  const onFormSubmit = (values, actions) => {
+    const formatYear = new Date(values.year).getFullYear();
+    actions.setSubmitting(false);
+    actions.resetForm();
+    addEditMovieData(actionType, { ...values, year: formatYear });
+    handleCancel();
+  };
+
+  const validateForm = (values) => {
+    if (!values.title) {
+      return { title: 'required' };
+    }
+    return {};
+  };
+
   return (
     <Card title={title} bordered={false} style={{ width: 860 }}>
       {cardWithAddEdit ? (
         <Formik
           initialValues={initialValues}
-          onSubmit={(values, actions) => {
-            const formatYear = new Date(values.year).getFullYear();
-            actions.setSubmitting(false);
-            actions.resetForm();
-            addEditMovieData(actionType, { ...values, year: formatYear });
-            handleCancel();
-          }}
-          validate={(values) => {
-            if (!values.title) {
-              return { title: 'required' };
-            }
-            return {};
-          }}
+          onSubmit={onFormSubmit}
+          validate={validateForm}
         >
           {() => (
             <Form layout='vertical' name='register' scrollToFirstError>

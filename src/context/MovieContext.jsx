@@ -31,7 +31,7 @@ const initialState = {
   }
 };
 
-const ManageModalReducer = (state, action) => {
+const ManageMovieReducer = (state, action) => {
   const { type, payload } = action;
   const arrayToModify = cloneDeep(state.moviesData);
   switch (type) {
@@ -50,11 +50,12 @@ const ManageModalReducer = (state, action) => {
     }
     case Actions.TO_ADD: {
       const generateId = payload?.title?.toLowerCase().substring(0, 3);
-      const newPayload = { ...payload, id: generateId };
 
       return {
         ...state,
-        ...{ moviesData: arrayToModify.push({ ...newPayload, id: generateId }) }
+        ...{
+          moviesData: [...state.moviesData, { ...payload, id: generateId }]
+        }
       };
     }
     case Actions.TO_DELETE:
@@ -87,8 +88,8 @@ const ManageModalReducer = (state, action) => {
  * @param props.children All elements that will use the MovieContext capabilities
  * @returns Provider for the Model context
  */
-export const ModalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(ManageModalReducer, initialState);
+export const MovieProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(ManageMovieReducer, initialState);
 
   const addEditMovieData = useCallback((type, object = {}) => {
     dispatch({ type, payload: object });
@@ -108,7 +109,7 @@ export const ModalProvider = ({ children }) => {
     []
   );
 
-  const Modal = useMemo(
+  const movieContextValue = useMemo(
     () => ({
       state,
       addEditMovieData,
@@ -126,10 +127,12 @@ export const ModalProvider = ({ children }) => {
   );
 
   return (
-    <MovieContext.Provider value={Modal}>{children}</MovieContext.Provider>
+    <MovieContext.Provider value={movieContextValue}>
+      {children}
+    </MovieContext.Provider>
   );
 };
 
-ModalProvider.propTypes = {
+MovieProvider.propTypes = {
   children: PropTypes.element.isRequired
 };

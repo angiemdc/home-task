@@ -16,10 +16,9 @@ export const MovieCards = ({ moviesData }) => {
   return (
     <Row gutter={[16, 16]}>
       {moviesData.map((movieData) => {
-        const { id } = movieData;
         return (
-          <Col key={id} span={8}>
-            <MemoizedMovie movieData={movieData} key={id} />
+          <Col key={movieData?.id} span={8}>
+            <MemoizedMovie movieData={movieData} key={movieData?.id} />
           </Col>
         );
       })}

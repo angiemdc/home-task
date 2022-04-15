@@ -30,11 +30,11 @@ export const Header = () => {
 
   const handleAddModal = (e) => {
     e.preventDefault();
-    setOpenModal(!openModal);
+    setOpenModal((open) => !open);
   };
 
   const handleCloseModal = useCallback(() => {
-    setOpenModal(!openModal);
+    setOpenModal((open) => !open);
   }, [openModal, setOpenModal]);
 
   return (

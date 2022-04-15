@@ -44,7 +44,7 @@ const MovieCard = ({ movieData }) => {
 
   const handleMenuClick = useCallback(
     (e) => {
-      setOpenModal(!openModal);
+      setOpenModal((open) => !open);
       if (e.key === 'Edit') {
         modalTitle.current = 'Edit Movie';
         openEdit.current = true;
@@ -57,7 +57,7 @@ const MovieCard = ({ movieData }) => {
     [openModal]
   );
   const handleCloseDescription = useCallback(() => {
-    setOpenModal(!openModal);
+    setOpenModal((open) => !open);
   }, [openModal, setOpenModal]);
 
   const setDetail = (e) => {
