@@ -1,0 +1,10 @@
+@import './assets/styles/main.scss';
+
+.customCard {
+  background-color: $black;
+  color: $white;
+  width: 320px;
+  div:first-of-type {
+    padding: 0;
+  }
+}

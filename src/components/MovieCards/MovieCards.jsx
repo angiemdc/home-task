@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -13,24 +12,26 @@ import { MemoizedMovie } from '../MovieCard/MovieCard';
  * @returns
  */
 
-export const MovieCards = ({ movieData }) => {
+export const MovieCards = ({ moviesData }) => {
   return (
     <Row gutter={[16, 16]}>
-      {movieData.map(({ id, ...others }) => (
-        <Col key={id} span={8}>
-          <MemoizedMovie {...others} key={id} />
-        </Col>
-      ))}
+      {moviesData.map((movieData) => {
+        return (
+          <Col key={movieData?.id} span={8}>
+            <MemoizedMovie movieData={movieData} key={movieData?.id} />
+          </Col>
+        );
+      })}
     </Row>
   );
 };
 
 MovieCards.defaultProps = {
-  movieData: []
+  moviesData: []
 };
 
 MovieCards.propTypes = {
-  movieData: PropTypes.arrayOf(
+  moviesData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
       image: PropTypes.string,

@@ -46,6 +46,7 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #fff;
+    text-align: left;
   }
   .ant-card-body {
     background-color: #232323;
@@ -71,11 +72,32 @@
     }
   }
   .ant-modal-close-icon {
-    background-color: #fff;
+    background-color: transparent;
   }
+}
+.ant-btn-group {
+  gap: 0.625rem;
 }
 
 .ant-btn-primary {
   background: #f65261;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ant-btn-secondary {
+  background: #232323;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #f65261;
+  border: 1.5px solid #f65261;
+  box-sizing: border-box;
   border-radius: 4px;
 }

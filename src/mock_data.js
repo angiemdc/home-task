@@ -8,16 +8,16 @@ import rmovie from './assets/images/rmovie.svg';
 export const genres = ['Crime', 'Documentary', 'Horror', 'Comedy'];
 
 export const tabsContent = [
-  { name: 'All', tabId: '1' },
-  { name: 'Documentary', tabId: '2' },
-  { name: 'Comedy', tabId: '3' },
-  { name: 'Horror', tabId: '4' },
-  { name: 'crime', tabId: '5' }
+  { title: 'All', tabId: '1' },
+  { title: 'Documentary', tabId: '2' },
+  { title: 'Comedy', tabId: '3' },
+  { title: 'Horror', tabId: '4' },
+  { title: 'crime', tabId: '5' }
 ];
 
 export const movieData = [
   {
-    name: 'Pulp Fiction',
+    title: 'Pulp Fiction',
     movieType: 'Action & Adventure',
     id: 'pul1',
     image: pmovie,
@@ -28,7 +28,7 @@ export const movieData = [
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
   },
   {
-    name: 'Bohemian Rhapsody',
+    title: 'Bohemian Rhapsody',
     movieType: 'Drama, Biography, Music',
     id: 'boh1',
     image: bmovie,
@@ -39,7 +39,7 @@ export const movieData = [
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
   },
   {
-    name: 'Kill Bill: Vol 2',
+    title: 'Kill Bill: Vol 2',
     movieType: 'Oscar winning Movie',
     id: 'kil1',
     image: kmovie,
@@ -50,7 +50,7 @@ export const movieData = [
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
   },
   {
-    name: 'Avengers: War of Infinity',
+    title: 'Avengers: War of Infinity',
     movieType: 'Action & Adventure',
     id: 'av1',
     image: amovie,
@@ -61,7 +61,7 @@ export const movieData = [
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
   },
   {
-    name: 'Inception',
+    title: 'Inception',
     movieType: 'Action & Adventure',
     id: 'in1',
     image: imovie,
@@ -72,7 +72,7 @@ export const movieData = [
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
   },
   {
-    name: 'Reservoir dogs',
+    title: 'Reservoir dogs',
     movieType: 'Oscar winning Movie',
     id: 're1',
     image: rmovie,

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Image, Space, Row, Col } from 'antd';
 
+import 'antd/dist/antd.css';
+
 export const MovieDescription = ({ movieContent }) => {
-  const { name, movieType, image, year, rating, runtime, description } =
+  const { title, movieType, image, year, rating, runtime, description } =
     movieContent;
   return (
     <Space size={24} direction='vertical'>
@@ -14,7 +15,7 @@ export const MovieDescription = ({ movieContent }) => {
         </Col>
         <Col span={18}>
           <Row>
-            <h1>{name}</h1>
+            <h1>{title}</h1>
             <spam>{rating}</spam>
           </Row>
           <Row>{movieType}</Row>
@@ -35,7 +36,7 @@ MovieDescription.defaultProps = {
 
 MovieDescription.propTypes = {
   movieContent: PropTypes.shape({
-    name: PropTypes.string,
+    title: PropTypes.string,
     movieType: PropTypes.string,
     image: PropTypes.string,
     year: PropTypes.string,

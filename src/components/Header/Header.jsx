@@ -1,11 +1,12 @@
-import React, { Suspense, lazy } from 'react';
-
+import React, { Suspense, lazy, useState, useCallback } from 'react';
 import { Button, Image } from 'antd';
-import { Actions } from '../../context/ModalContext';
-import { useModal } from '../../hooks/useModal';
+import { useMovieData } from '../../hooks/useMovieData';
 import { Logo } from '../Logo/Logo';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
+import { CustomModal } from '../CustomModal/CustomModal';
+import { AddEditMovie } from '../AddEditMovie/AddEditMovie';
 import sButton from '../../assets/images/searchButton.svg';
+
 import './Header.modules.scss';
 
 const MovieDescription = lazy(() =>
@@ -21,16 +22,20 @@ const Search = lazy(() =>
 );
 
 export const Header = () => {
-  const { updateModalType, state } = useModal();
-  const { triggerDescription, movieContent } = state;
+  const [openModal, setOpenModal] = useState(false);
+  const {
+    state: { triggerDescription, movieContent },
+    closeMovieDescription
+  } = useMovieData();
 
   const handleAddModal = (e) => {
     e.preventDefault();
-    updateModalType(Actions.OPEN_MODAL_TO_ADD);
+    setOpenModal((open) => !open);
   };
-  const handleCloseDescription = () => {
-    updateModalType(Actions.CLOSE_DESCRIPTION);
-  };
+
+  const handleCloseModal = useCallback(() => {
+    setOpenModal((open) => !open);
+  }, [openModal, setOpenModal]);
 
   return (
     <header
@@ -43,25 +48,30 @@ export const Header = () => {
           <Button
             icon={<Image width={10} src={sButton} preview={false} />}
             ghost
-            onClick={handleCloseDescription}
+            onClick={() => closeMovieDescription()}
           />
         ) : (
-          <button type='button' className='btn' onClick={handleAddModal}>
+          <Button type='button' className='btn' onClick={handleAddModal}>
             + ADD MOVIE
-          </button>
+          </Button>
         )}
       </div>
       <ErrorBoundary>
-        {triggerDescription ? (
-          <Suspense>
+        <Suspense fallback={<h1>loading...</h1>}>
+          {triggerDescription ? (
             <MovieDescription movieContent={movieContent} />
-          </Suspense>
-        ) : (
-          <Suspense>
+          ) : (
             <Search />
-          </Suspense>
-        )}
+          )}
+        </Suspense>
       </ErrorBoundary>
+      <CustomModal openModal={openModal} handleCancel={handleCloseModal}>
+        <AddEditMovie
+          title='ADD MOVIE'
+          openAdd
+          handleCancel={handleCloseModal}
+        />
+      </CustomModal>
     </header>
   );
 };
