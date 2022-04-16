@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Image, Space, Card, Row, Col, Menu, Dropdown } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
@@ -60,16 +62,18 @@ const MovieCard = ({ movieData }) => {
     setOpenModal((open) => !open);
   }, [openModal, setOpenModal]);
 
-  const setDetail = (e) => {
-    e.preventDefault();
-    openMovieDescription(id);
-  };
+  // const setDetail = (e) => {
+  //   e.preventDefault();
+  //   openMovieDescription(id);
+  // };
 
   return (
     <Space size={24} direction='vertical'>
       <Card className='customCard' bordered={false}>
         <Col span={24} style={{ paddingLeft: 0, position: 'relative' }}>
-          <Image width={320} src={image} preview={false} onClick={setDetail} />
+          <Link to={`/movie/${id}`} state={{ movieData }}>
+            <Image width={320} src={image} preview={false} />
+          </Link>
           <DropdownMovie handleMenuClick={handleMenuClick} />
         </Col>
         <Row gutter={[1, 16]} align='middle' justify='space-between'>

@@ -1,4 +1,5 @@
-import React, { Suspense, lazy, useState, useCallback } from 'react';
+import React, { Suspense, lazy, useState, useCallback, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Image } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
 import { Logo } from '../Logo/Logo';
@@ -23,9 +24,13 @@ const Search = lazy(() =>
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
+  const { movieId } = useParams();
+  const navigate = useNavigate();
+
   const {
     state: { triggerDescription, movieContent },
-    closeMovieDescription
+    closeMovieDescription,
+    openMovieDescription
   } = useMovieData();
 
   const handleAddModal = (e) => {
@@ -35,7 +40,20 @@ export const Header = () => {
 
   const handleCloseModal = useCallback(() => {
     setOpenModal((open) => !open);
-  }, [openModal, setOpenModal]);
+  }, [setOpenModal]);
+
+  const openSearch = () => {
+    closeMovieDescription();
+    navigate({
+      pathname: '/'
+    });
+  };
+
+  useEffect(() => {
+    if (movieId) {
+      openMovieDescription(movieId);
+    }
+  }, [movieId, openMovieDescription]);
 
   return (
     <header
@@ -48,7 +66,7 @@ export const Header = () => {
           <Button
             icon={<Image width={10} src={sButton} preview={false} />}
             ghost
-            onClick={() => closeMovieDescription()}
+            onClick={openSearch}
           />
         ) : (
           <Button type='button' className='btn' onClick={handleAddModal}>

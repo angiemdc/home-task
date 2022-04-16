@@ -16,7 +16,7 @@ export const MovieDescription = ({ movieContent }) => {
         <Col span={18}>
           <Row>
             <h1>{title}</h1>
-            <spam>{rating}</spam>
+            <span>{rating}</span>
           </Row>
           <Row>{movieType}</Row>
           <Row span={8}>
