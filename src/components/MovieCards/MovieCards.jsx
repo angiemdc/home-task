@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Row, Col } from 'antd';
@@ -13,9 +14,19 @@ import { MemoizedMovie } from '../MovieCard/MovieCard';
  */
 
 export const MovieCards = ({ moviesData }) => {
+  const { searchQuery } = useParams();
+
+  const filterData = useMemo(() => {
+    return moviesData.filter((movie) => {
+      return searchQuery
+        ? movie?.title?.toLowerCase().includes(searchQuery.toLowerCase())
+        : movie?.rating > 7;
+    });
+  }, [moviesData, searchQuery]);
+
   return (
     <Row gutter={[16, 16]}>
-      {moviesData.map((movieData) => {
+      {filterData.map((movieData) => {
         return (
           <Col key={movieData?.id} span={8}>
             <MemoizedMovie movieData={movieData} key={movieData?.id} />

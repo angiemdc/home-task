@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useState, useCallback, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Button, Image } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
 import { Logo } from '../Logo/Logo';
@@ -24,8 +24,9 @@ const Search = lazy(() =>
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { movieId } = useParams();
+  const [params] = useSearchParams();
   const navigate = useNavigate();
+  const movieId = params.get('movie');
 
   const {
     state: { triggerDescription, movieContent },

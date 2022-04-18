@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Image, Space, Card, Row, Col, Menu, Dropdown } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
@@ -38,42 +38,37 @@ const DropdownMovie = React.memo(({ handleMenuClick }) => {
  * @returns
  */
 const MovieCard = ({ movieData }) => {
-  const { openMovieDescription } = useMovieData();
+  const [, setParams] = useSearchParams();
   const { title, movieType, image, year, id } = movieData;
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = useRef('');
   const openEdit = useRef(false);
 
-  const handleMenuClick = useCallback(
-    (e) => {
-      setOpenModal((open) => !open);
-      if (e.key === 'Edit') {
-        modalTitle.current = 'Edit Movie';
-        openEdit.current = true;
-      }
-      if (e.key === 'Delete') {
-        modalTitle.current = 'Delete Movie';
-        openEdit.current = false;
-      }
-    },
-    [openModal]
-  );
+  const handleMenuClick = useCallback((e) => {
+    setOpenModal((open) => !open);
+    if (e.key === 'Edit') {
+      modalTitle.current = 'Edit Movie';
+      openEdit.current = true;
+    }
+    if (e.key === 'Delete') {
+      modalTitle.current = 'Delete Movie';
+      openEdit.current = false;
+    }
+  }, []);
   const handleCloseDescription = useCallback(() => {
     setOpenModal((open) => !open);
-  }, [openModal, setOpenModal]);
+  }, [setOpenModal]);
 
-  // const setDetail = (e) => {
-  //   e.preventDefault();
-  //   openMovieDescription(id);
-  // };
+  const setDetail = (e) => {
+    e.preventDefault();
+    setParams({ movie: id });
+  };
 
   return (
     <Space size={24} direction='vertical'>
       <Card className='customCard' bordered={false}>
         <Col span={24} style={{ paddingLeft: 0, position: 'relative' }}>
-          <Link to={`/movie/${id}`} state={{ movieData }}>
-            <Image width={320} src={image} preview={false} />
-          </Link>
+          <Image width={320} src={image} preview={false} onClick={setDetail} />
           <DropdownMovie handleMenuClick={handleMenuClick} />
         </Col>
         <Row gutter={[1, 16]} align='middle' justify='space-between'>

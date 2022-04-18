@@ -13,7 +13,7 @@ const App = () => (
       <Route path='/search' element={<Home />} />
       <Route path='/' element={<Navigate to='/search' replace />} />
       <Route path='/search' element={<Home />} />
-      <Route path='/movie/:movieId' element={<Home />} />
+      <Route path='/search/:searchQuery' element={<Home />} />
     </Routes>
   </MovieProvider>
 );
