@@ -1,5 +1,8 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-undef */
 import React, { useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { sortBy } from 'lodash';
 import PropTypes from 'prop-types';
 
 import { Row, Col } from 'antd';
@@ -17,8 +20,18 @@ export const MovieCards = ({ moviesData }) => {
   const { searchQuery } = useParams();
   const [params] = useSearchParams();
   const genre = params.get('genre');
+  let sortDateName = params.get('sortBy').toLowerCase();
+  console.log(sortDateName);
+  sortDateName =
+    sortDateName === 'date'
+      ? 'year'
+      : sortDateName === 'name'
+      ? 'title'
+      : sortDateName;
 
-  const filterData = useMemo(() => {
+  console.log(sortDateName);
+
+  let filterData = useMemo(() => {
     return moviesData.filter((movie) => {
       if (searchQuery && !genre)
         return movie?.title?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -27,6 +40,10 @@ export const MovieCards = ({ moviesData }) => {
       return movie?.rating > 7;
     });
   }, [moviesData, searchQuery, genre]);
+
+  console.log(filterData);
+
+  filterData = sortDateName ? sortBy(filterData, sortDateName) : filterData;
 
   return (
     <Row gutter={[16, 16]}>
