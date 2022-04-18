@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Row, Col } from 'antd';
@@ -15,14 +15,18 @@ import { MemoizedMovie } from '../MovieCard/MovieCard';
 
 export const MovieCards = ({ moviesData }) => {
   const { searchQuery } = useParams();
+  const [params] = useSearchParams();
+  const genre = params.get('genre');
 
   const filterData = useMemo(() => {
     return moviesData.filter((movie) => {
-      return searchQuery
-        ? movie?.title?.toLowerCase().includes(searchQuery.toLowerCase())
-        : movie?.rating > 7;
+      if (searchQuery && !genre)
+        return movie?.title?.toLowerCase().includes(searchQuery.toLowerCase());
+      if (genre)
+        return movie?.movieType?.toLowerCase().includes(genre.toLowerCase());
+      return movie?.rating > 7;
     });
-  }, [moviesData, searchQuery]);
+  }, [moviesData, searchQuery, genre]);
 
   return (
     <Row gutter={[16, 16]}>

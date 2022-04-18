@@ -3,7 +3,6 @@ import React, { useState, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Image, Space, Card, Row, Col, Menu, Dropdown } from 'antd';
-import { useMovieData } from '../../hooks/useMovieData';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { AddEditMovie } from '../AddEditMovie/AddEditMovie';
 
