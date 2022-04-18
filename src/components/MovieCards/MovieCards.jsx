@@ -20,16 +20,7 @@ export const MovieCards = ({ moviesData }) => {
   const { searchQuery } = useParams();
   const [params] = useSearchParams();
   const genre = params.get('genre');
-  let sortDateName = params.get('sortBy').toLowerCase();
-  console.log(sortDateName);
-  sortDateName =
-    sortDateName === 'date'
-      ? 'year'
-      : sortDateName === 'name'
-      ? 'title'
-      : sortDateName;
-
-  console.log(sortDateName);
+  let sortDateName = params.get('sortBy');
 
   let filterData = useMemo(() => {
     return moviesData.filter((movie) => {
@@ -41,9 +32,17 @@ export const MovieCards = ({ moviesData }) => {
     });
   }, [moviesData, searchQuery, genre]);
 
-  console.log(filterData);
+  if (sortDateName) {
+    sortDateName = sortDateName.toLowerCase();
+    sortDateName =
+      sortDateName === 'date'
+        ? 'year'
+        : sortDateName === 'name'
+        ? 'title'
+        : sortDateName;
 
-  filterData = sortDateName ? sortBy(filterData, sortDateName) : filterData;
+    filterData = sortDateName ? sortBy(filterData, sortDateName) : filterData;
+  }
 
   return (
     <Row gutter={[16, 16]}>

@@ -6,6 +6,7 @@ import imovie from './assets/images/imovie.svg';
 import rmovie from './assets/images/rmovie.svg';
 
 export const genres = ['Crime', 'Documentary', 'Horror', 'Comedy'];
+export const sortByMenu = ['Date', 'Name'];
 
 export const tabsContent = [
   { title: 'All', tabId: '1' },
