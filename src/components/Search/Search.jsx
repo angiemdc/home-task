@@ -13,6 +13,12 @@ export const Search = () => {
     navigate(`/search/${inputEl.current.value}`, { replace: false });
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      navigate(`/search/${inputEl.current.value}`, { replace: false });
+    }
+  };
+
   return (
     <section className='search__content'>
       <h1>FIND YOUR MOViE</h1>
@@ -25,6 +31,7 @@ export const Search = () => {
             className='search__input'
             placeholder='What do you want to watch?'
             ref={inputEl}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <button type='button' onClick={handleSubmit}>
