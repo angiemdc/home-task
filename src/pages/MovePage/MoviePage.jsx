@@ -7,7 +7,6 @@ export const MoviePage = () => {
   const {
     state: { movieData }
   } = useLocation();
-  console.log(movieData);
   return (
     <div>
       <Layout>

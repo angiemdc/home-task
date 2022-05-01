@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-undef */
 import React, { useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { sortBy } from 'lodash';
@@ -20,33 +18,37 @@ export const MovieCards = ({ moviesData }) => {
   const { searchQuery } = useParams();
   const [params] = useSearchParams();
   const genre = params.get('genre');
-  let sortDateName = params.get('sortBy');
+  const sortDateName = params.get('sortBy');
 
-  let filterData = useMemo(() => {
+  const filterData = useMemo(() => {
     return moviesData.filter((movie) => {
       if (searchQuery && !genre)
         return movie?.title?.toLowerCase().includes(searchQuery.toLowerCase());
-      if (genre)
-        return movie?.movieType?.toLowerCase().includes(genre.toLowerCase());
+      if (genre) {
+        const movieTypes = movie?.movieType ? movie.movieType.split(', ') : [];
+
+        return movieTypes.some((type) =>
+          type.toLowerCase().includes(genre.toLowerCase())
+        );
+      }
       return movie?.rating > 7;
     });
   }, [moviesData, searchQuery, genre]);
 
-  if (sortDateName) {
-    sortDateName = sortDateName.toLowerCase();
-    sortDateName =
-      sortDateName === 'date'
-        ? 'year'
-        : sortDateName === 'name'
-        ? 'title'
-        : sortDateName;
-
-    filterData = sortDateName ? sortBy(filterData, sortDateName) : filterData;
-  }
+  const getSortedDateName = useMemo(() => {
+    if (!sortDateName) return filterData;
+    const sortType = {
+      date: 'year',
+      name: 'title'
+    };
+    const sortName = sortDateName.toLowerCase();
+    const sortTypeName = sortType[sortName] ?? sortName;
+    return sortTypeName ? sortBy(filterData, sortTypeName) : filterData;
+  }, [filterData, sortDateName]);
 
   return (
     <Row gutter={[16, 16]}>
-      {filterData.map((movieData) => {
+      {getSortedDateName.map((movieData) => {
         return (
           <Col key={movieData?.id} span={8}>
             <MemoizedMovie movieData={movieData} key={movieData?.id} />

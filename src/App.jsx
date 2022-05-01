@@ -9,11 +9,10 @@ import './assets/styles/main.scss';
 const App = () => (
   <MovieProvider>
     <Routes>
-      <Route path='*' element={<ErrorPage />} />
-      <Route path='/search' element={<Home />} />
       <Route path='/' element={<Navigate to='/search' replace />} />
       <Route path='/search' element={<Home />} />
       <Route path='/search/:searchQuery' element={<Home />} />
+      <Route path='*' element={<ErrorPage />} />
     </Routes>
   </MovieProvider>
 );
