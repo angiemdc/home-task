@@ -6,6 +6,7 @@ import imovie from './assets/images/imovie.svg';
 import rmovie from './assets/images/rmovie.svg';
 
 export const genres = ['Crime', 'Documentary', 'Horror', 'Comedy'];
+export const sortByMenu = ['Date', 'Name'];
 
 export const tabsContent = [
   { title: 'All', tabId: '1' },
@@ -33,7 +34,7 @@ export const movieData = [
     id: 'boh1',
     image: bmovie,
     year: '2003',
-    rating: '9.8',
+    rating: '7.8',
     runtime: '1h 47min',
     description:
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
@@ -44,7 +45,7 @@ export const movieData = [
     id: 'kil1',
     image: kmovie,
     year: '1994',
-    rating: '9.8',
+    rating: '8.8',
     runtime: '1h 47min',
     description:
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
@@ -55,7 +56,7 @@ export const movieData = [
     id: 'av1',
     image: amovie,
     year: '2004',
-    rating: '9.8',
+    rating: '5.8',
     runtime: '1h 47min',
     description:
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."
@@ -66,7 +67,7 @@ export const movieData = [
     id: 'in1',
     image: imovie,
     year: '2003',
-    rating: '9.8',
+    rating: '6.8',
     runtime: '1h 47min',
     description:
       "Moana Waialiki is a sea voyaging enthusiast and the only daughter of a chief in a long line of navigators. When her island's fishermen can't catch any fish and the crops fail, she learns that the demigod Maui caused the blight by stealing the heart of the goddess, Te Fiti. The only way to heal the island is to persuade Maui to return Te Fiti's heart, so Moana sets off on an epic journey across the Pacific. The film is based on stories from Polynesian mythology."

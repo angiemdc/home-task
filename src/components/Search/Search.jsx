@@ -1,23 +1,22 @@
-import React, { useState, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
+/* eslint-disable no-unused-vars */
+import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './Search.modules.scss';
 
-export const Search = ({ details }) => {
-  const [searchMovie, setSearchMovie] = useState('');
+export const Search = () => {
+  const navigate = useNavigate();
   const inputEl = useRef(null);
-
-  const filteredMovie = useMemo(() => {
-    return details.filter((movie) => {
-      return movie.name === searchMovie;
-    });
-  }, [details, searchMovie]);
-
-  console.log(filteredMovie);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchMovie(inputEl.current.value);
+    navigate(`/search/${inputEl.current.value}`, { replace: false });
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      navigate(`/search/${inputEl.current.value}`, { replace: false });
+    }
   };
 
   return (
@@ -32,6 +31,7 @@ export const Search = ({ details }) => {
             className='search__input'
             placeholder='What do you want to watch?'
             ref={inputEl}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <button type='button' onClick={handleSubmit}>
@@ -44,15 +44,4 @@ export const Search = ({ details }) => {
 
 Search.defaultProps = {
   details: []
-};
-
-Search.propTypes = {
-  details: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-      movieType: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired
-    })
-  )
 };

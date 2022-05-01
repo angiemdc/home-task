@@ -68,7 +68,7 @@ const ManageMovieReducer = (state, action) => {
       const filteredMovie = arrayToModify.filter(({ id }) => id === payload);
       return {
         ...state,
-        ...{ triggerDescription: !state.triggerDescription },
+        ...{ triggerDescription: true },
         ...{ movieContent: filteredMovie?.[0] }
       };
     }

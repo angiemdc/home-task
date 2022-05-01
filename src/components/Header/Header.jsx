@@ -1,10 +1,12 @@
-import React, { Suspense, lazy, useState, useCallback } from 'react';
-import { Button, Image } from 'antd';
+import React, { Suspense, lazy, useState, useCallback, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Button, Image, Menu, Dropdown, Row, Space } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
 import { Logo } from '../Logo/Logo';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { AddEditMovie } from '../AddEditMovie/AddEditMovie';
+import { genres, sortByMenu } from '../../mock_data';
 import sButton from '../../assets/images/searchButton.svg';
 
 import './Header.modules.scss';
@@ -21,11 +23,32 @@ const Search = lazy(() =>
   }))
 );
 
+const DropdownMenu = React.memo(({ handleMenuClick, items, children }) => {
+  return (
+    <Dropdown.Button
+      overlay={
+        <Menu onClick={handleMenuClick}>
+          {items.map((item) => (
+            <Menu.Item key={item}>{item}</Menu.Item>
+          ))}
+        </Menu>
+      }
+    >
+      {children}
+    </Dropdown.Button>
+  );
+});
+
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
+  const movieId = params.get('movie');
+
   const {
     state: { triggerDescription, movieContent },
-    closeMovieDescription
+    closeMovieDescription,
+    openMovieDescription
   } = useMovieData();
 
   const handleAddModal = (e) => {
@@ -35,7 +58,32 @@ export const Header = () => {
 
   const handleCloseModal = useCallback(() => {
     setOpenModal((open) => !open);
-  }, [openModal, setOpenModal]);
+  }, [setOpenModal]);
+
+  const openSearch = () => {
+    closeMovieDescription();
+    navigate({
+      pathname: '/'
+    });
+  };
+
+  const handleMenuClick = useCallback(
+    (e) => {
+      if (sortByMenu.includes(e.key)) {
+        setParams({ sortBy: e.key });
+      }
+      if (genres.includes(e.key)) {
+        setParams({ genre: e.key });
+      }
+    },
+    [setParams]
+  );
+
+  useEffect(() => {
+    if (movieId) {
+      openMovieDescription(movieId);
+    }
+  }, [movieId, openMovieDescription]);
 
   return (
     <header
@@ -48,7 +96,7 @@ export const Header = () => {
           <Button
             icon={<Image width={10} src={sButton} preview={false} />}
             ghost
-            onClick={() => closeMovieDescription()}
+            onClick={openSearch}
           />
         ) : (
           <Button type='button' className='btn' onClick={handleAddModal}>
@@ -61,7 +109,29 @@ export const Header = () => {
           {triggerDescription ? (
             <MovieDescription movieContent={movieContent} />
           ) : (
-            <Search />
+            <>
+              <Row>
+                <Space wrap>
+                  <DropdownMenu
+                    style={{ position: 'relative' }}
+                    handleMenuClick={handleMenuClick}
+                    items={sortByMenu}
+                  >
+                    sortBy
+                  </DropdownMenu>
+                  <DropdownMenu
+                    style={{ position: 'relative' }}
+                    handleMenuClick={handleMenuClick}
+                    items={genres}
+                  >
+                    genres
+                  </DropdownMenu>
+                </Space>
+              </Row>
+              <Row>
+                <Search />
+              </Row>
+            </>
           )}
         </Suspense>
       </ErrorBoundary>

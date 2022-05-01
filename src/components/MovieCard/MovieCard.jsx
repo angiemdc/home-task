@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useCallback, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Image, Space, Card, Row, Col, Menu, Dropdown } from 'antd';
-import { useMovieData } from '../../hooks/useMovieData';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { AddEditMovie } from '../AddEditMovie/AddEditMovie';
 
@@ -36,33 +37,30 @@ const DropdownMovie = React.memo(({ handleMenuClick }) => {
  * @returns
  */
 const MovieCard = ({ movieData }) => {
-  const { openMovieDescription } = useMovieData();
+  const [, setParams] = useSearchParams();
   const { title, movieType, image, year, id } = movieData;
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = useRef('');
   const openEdit = useRef(false);
 
-  const handleMenuClick = useCallback(
-    (e) => {
-      setOpenModal((open) => !open);
-      if (e.key === 'Edit') {
-        modalTitle.current = 'Edit Movie';
-        openEdit.current = true;
-      }
-      if (e.key === 'Delete') {
-        modalTitle.current = 'Delete Movie';
-        openEdit.current = false;
-      }
-    },
-    [openModal]
-  );
+  const handleMenuClick = useCallback((e) => {
+    setOpenModal((open) => !open);
+    if (e.key === 'Edit') {
+      modalTitle.current = 'Edit Movie';
+      openEdit.current = true;
+    }
+    if (e.key === 'Delete') {
+      modalTitle.current = 'Delete Movie';
+      openEdit.current = false;
+    }
+  }, []);
   const handleCloseDescription = useCallback(() => {
     setOpenModal((open) => !open);
-  }, [openModal, setOpenModal]);
+  }, [setOpenModal]);
 
   const setDetail = (e) => {
     e.preventDefault();
-    openMovieDescription(id);
+    setParams({ movie: id });
   };
 
   return (
