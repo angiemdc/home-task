@@ -27,14 +27,13 @@ export const Search = () => {
           <input
             name='movie'
             type='search'
-            id='search'
             className='search__input'
             placeholder='What do you want to watch?'
             ref={inputEl}
             onKeyDown={handleKeyDown}
           />
         </div>
-        <button type='button' onClick={handleSubmit}>
+        <button type='button' data-testid='searchBtn' onClick={handleSubmit}>
           search
         </button>
       </div>
