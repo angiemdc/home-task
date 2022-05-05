@@ -10,7 +10,7 @@ import './Footer.modules.scss';
  */
 
 export const Footer = () => (
-  <footer className='footer'>
+  <footer className='footer' data-testid='footerComponent'>
     <Logo />
   </footer>
 );
