@@ -14,7 +14,7 @@ import {
 } from 'formik-antd';
 import { Card, Button, Row, Col } from 'antd';
 import { useMovieData } from '../../hooks/useMovieData';
-import { actions } from '../../context/MovieContext';
+import { actions } from '../../context/MovieReducer';
 import { genres } from '../../mock_data';
 
 import 'antd/dist/antd.css';
@@ -50,10 +50,10 @@ export const AddEditMovie = ({
     handleCancel();
   };
 
-  const onFormSubmit = (values, actions) => {
+  const onFormSubmit = (values, action) => {
     const formatYear = new Date(values.year).getFullYear();
-    actions.setSubmitting(false);
-    actions.resetForm();
+    action.setSubmitting(false);
+    action.resetForm();
     addEditMovieData(actionType, { ...values, year: formatYear });
     handleCancel();
   };
